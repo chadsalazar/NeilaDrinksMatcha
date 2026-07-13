@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thanks! — Neil Drinks Matcha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fdf8ee; --paper:#fffdf7; --ink:#1c1c1c;
+    --matcha:#7fa64c; --red:#e84c3d; --yellow:#f4c53f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; background:var(--cream); color:var(--ink);
+    font-family:'Nunito', sans-serif; display:flex; align-items:center; justify-content:center;
+    padding:28px; text-align:center;
+  }
+  a{color:inherit;}
+  .card{
+    background:var(--paper); border:3px solid var(--ink); border-radius:24px;
+    box-shadow:6px 6px 0 var(--ink); padding:52px 40px; max-width:480px;
+  }
+  .card svg{ width:64px; height:64px; margin-bottom:18px; }
+  h1{ font-family:'Fredoka', sans-serif; font-weight:600; font-size:28px; margin:0 0 12px; }
+  p{ font-size:16px; font-weight:600; color:rgba(28,28,28,0.75); margin:0 0 26px; }
+  .btn{
+    font-family:'Fredoka', sans-serif; font-weight:600; font-size:15px;
+    background:var(--matcha); color:var(--ink); border:3px solid var(--ink); border-radius:100px;
+    padding:12px 22px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    box-shadow:4px 4px 0 var(--ink); transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <svg viewBox="0 0 48 48" fill="none">
+      <ellipse cx="24" cy="24" rx="20" ry="19" fill="#7fa64c" stroke="#1c1c1c" stroke-width="3"/>
+      <path d="M15 24l6 6 12-13" stroke="#fffdf7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <h1>Thanks for the tip!</h1>
+    <p>Your café submission is in. It'll be reviewed and — if it holds up — added to the map and rankings soon.</p>
+    <a class="btn" href="index.html">Back to the site</a>
+  </div>
+</body>
+</html>

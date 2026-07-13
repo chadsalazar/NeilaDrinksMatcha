@@ -1,0 +1,9 @@
+{
+  "name": "neil-drinks-matcha",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Neil Drinks Matcha — site and functions",
+  "dependencies": {
+    "@netlify/blobs": "^10.0.0"
+  }
+}

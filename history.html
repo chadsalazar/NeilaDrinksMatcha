@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>History — Neil Drinks Matcha</title>
+<meta name="description" content="Every café Neil Drinks Matcha has rated, plus every café the community has submitted.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fdf8ee; --paper:#fffdf7; --ink:#1c1c1c;
+    --matcha:#7fa64c; --matcha-deep:#587a2e; --red:#e84c3d; --blue:#2f80c4; --yellow:#f4c53f;
+    --max: 1080px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--cream); color:var(--ink);
+    font-family:'Nunito', sans-serif; font-size:16px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+  h1,h2{font-family:'Fredoka', sans-serif; font-weight:600; margin:0; color:var(--ink);}
+
+  header{ position:sticky; top:0; z-index:20; background:var(--cream); border-bottom:3px solid var(--ink); }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 0; }
+  .logo{ font-family:'Fredoka', sans-serif; font-weight:600; font-size:20px; display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .logo svg{width:34px;height:34px;flex-shrink:0;}
+  .nav-links{display:flex; gap:26px; font-size:15px; font-weight:700;}
+  .nav-links a{text-decoration:none; opacity:.8; transition:opacity .2s;}
+  .nav-links a:hover{opacity:1;}
+  .nav-links a.current{opacity:1; border-bottom:2.5px solid var(--ink);}
+  .follow-btn{
+    font-family:'Fredoka', sans-serif; font-weight:600; font-size:14px;
+    background:var(--red); color:var(--paper); padding:10px 18px; border-radius:100px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:7px; border:3px solid var(--ink);
+    box-shadow:3px 3px 0 var(--ink); transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .follow-btn:hover{transform:translate(2px,2px); box-shadow:1px 1px 0 var(--ink);}
+
+  main{ padding:60px 0 90px; }
+  .intro{ max-width:60ch; margin-bottom:20px; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--matcha-deep); font-weight:500; display:block; margin-bottom:10px;
+  }
+  .intro h1{ font-size:clamp(30px,4.4vw,44px); line-height:1.08; margin-bottom:14px;}
+  .intro p{ font-size:16.5px; font-weight:600; color:rgba(28,28,28,0.75); }
+
+  .record-section{ margin-top:56px; }
+  .record-head{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:20px; }
+  .record-head h2{ font-size:clamp(24px,3.2vw,32px); }
+  .record-tag{
+    font-family:'Fredoka', sans-serif; font-weight:600; font-size:12.5px; text-transform:uppercase;
+    border:2.5px solid var(--ink); border-radius:100px; padding:5px 12px; display:inline-flex; align-items:center; gap:8px;
+  }
+  .record-tag.ndm{ background:var(--yellow); color:var(--ink); }
+  .record-tag.community{ background:var(--blue); color:var(--paper); }
+
+  .record-table-wrap{
+    border:3px solid var(--ink); border-radius:20px; background:var(--paper);
+    box-shadow:6px 6px 0 var(--ink); overflow:hidden;
+  }
+  table{ width:100%; border-collapse:collapse; }
+  thead th{
+    font-family:'Fredoka', sans-serif; font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:.02em;
+    text-align:left; padding:14px 18px; background:var(--matcha); color:var(--ink); border-bottom:3px solid var(--ink);
+  }
+  tbody td{
+    padding:14px 18px; font-size:14.5px; font-weight:600; border-bottom:2px dashed rgba(28,28,28,0.15);
+    vertical-align:top;
+  }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:nth-child(even){ background:rgba(127,166,76,0.06); }
+  td.score{ font-family:'IBM Plex Mono', monospace; font-weight:500; white-space:nowrap; }
+  td a{ text-decoration:none; border-bottom:2px solid var(--ink); }
+  .desc-cell{ color:rgba(28,28,28,0.72); font-weight:600; max-width:36ch; }
+  .empty-row td{ text-align:center; color:rgba(28,28,28,0.5); padding:30px; }
+
+  footer{ background:var(--ink); color:var(--paper); padding:34px 0; margin-top:70px; }
+  .foot-bottom{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:rgba(253,248,238,0.55);
+    flex-wrap:wrap; gap:12px;
+  }
+  .foot-bottom a{ text-decoration:none; color:rgba(253,248,238,0.8); font-weight:500; }
+
+  @media (max-width:760px){
+    .nav-links{ display:none; }
+    .record-table-wrap{ overflow-x:auto; }
+    table{ min-width:640px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 48 48" fill="none">
+        <rect x="4" y="4" width="40" height="40" rx="12" fill="#7fa64c" stroke="#1c1c1c" stroke-width="3"/>
+        <path d="M16 20c0-6 3-9 8-9s8 3 8 9v11a3 3 0 0 1-3 3H19a3 3 0 0 1-3-3V20Z" fill="#fffdf7" stroke="#1c1c1c" stroke-width="2.4"/>
+        <circle cx="20.5" cy="24" r="1.6" fill="#1c1c1c"/>
+        <circle cx="27.5" cy="24" r="1.6" fill="#1c1c1c"/>
+      </svg>
+      Neil Drinks Matcha
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#about">About</a>
+      <a href="index.html#map">Cafe Map</a>
+      <a href="index.html#community-map">Community Map</a>
+      <a href="history.html" class="current">History</a>
+      <a href="submit.html">Submit a Cafe</a>
+    </nav>
+    <a class="follow-btn" href="https://instagram.com/neiladrinksmatcha" target="_blank" rel="noopener">
+      Follow on IG ↗
+    </a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="intro">
+      <span class="eyebrow">The full archive</span>
+      <h1>Every café, on the record.</h1>
+      <p>Two separate ledgers: Neil's own curated ratings, and everything the community has submitted and scored.</p>
+    </div>
+
+    <section class="record-section">
+      <div class="record-head">
+        <h2>Neila Drinks Matcha — historical record</h2>
+        <span class="record-tag ndm">Curated by Neil</span>
+      </div>
+      <div class="record-table-wrap">
+        <table>
+          <thead>
+            <tr><th>Café</th><th>Address</th><th>NDM Score</th><th>Site</th></tr>
+          </thead>
+          <tbody id="ndm-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="record-section">
+      <div class="record-head">
+        <h2>Community matcha map — historical record</h2>
+        <span class="record-tag community">Submitted by the community</span>
+      </div>
+      <div class="record-table-wrap">
+        <table>
+          <thead>
+            <tr><th>Café</th><th>Address</th><th>NDM Score</th><th>Submitted by</th><th>Notes</th></tr>
+          </thead>
+          <tbody id="community-table-body">
+            <tr class="empty-row"><td colspan="5">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-bottom">
+    <span>neiladrinksmatcha.com</span>
+    <a href="https://instagram.com/neiladrinksmatcha" target="_blank" rel="noopener">Instagram ↗</a>
+  </div>
+</footer>
+
+<script src="data/cafes.js"></script>
+<script>
+  var ndmBody = document.getElementById('ndm-table-body');
+  var sortedNdm = NDM_CAFES.slice().sort(function(a, b){ return b.score - a.score; });
+  sortedNdm.forEach(function(cafe){
+    var row = document.createElement('tr');
+    row.innerHTML =
+      '<td>' + cafe.name + '</td>' +
+      '<td>' + cafe.address + '</td>' +
+      '<td class="score">' + cafe.score.toFixed(1) + '</td>' +
+      '<td><a href="' + cafe.url + '" target="_blank" rel="noopener">Visit ↗</a></td>';
+    ndmBody.appendChild(row);
+  });
+
+  var communityBody = document.getElementById('community-table-body');
+  fetch('/.netlify/functions/get-community-cafes')
+    .then(function(res){ return res.json(); })
+    .then(function(entries){
+      if (!entries || entries.length === 0) {
+        communityBody.innerHTML = '<tr class="empty-row"><td colspan="5">No community submissions yet — <a href="submit.html">be the first</a>.</td></tr>';
+        return;
+      }
+      communityBody.innerHTML = '';
+      entries.forEach(function(cafe){
+        var row = document.createElement('tr');
+        row.innerHTML =
+          '<td>' + cafe.name + (cafe.website ? ' — <a href="' + cafe.website + '" target="_blank" rel="noopener">site ↗</a>' : '') + '</td>' +
+          '<td>' + cafe.address + '</td>' +
+          '<td class="score">' + parseFloat(cafe.score).toFixed(1) + '</td>' +
+          '<td>' + (cafe.submitter || '—') + '</td>' +
+          '<td class="desc-cell">' + cafe.description + '</td>';
+        communityBody.appendChild(row);
+      });
+    })
+    .catch(function(){
+      communityBody.innerHTML = '<tr class="empty-row"><td colspan="5">Couldn\'t load community submissions right now.</td></tr>';
+    });
+</script>
+</body>
+</html>
