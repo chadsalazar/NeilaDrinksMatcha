@@ -277,6 +277,9 @@
   .visit-card .visit-cafe{
     font-family:'Fredoka', sans-serif; font-weight:600; font-size:14.5px;
   }
+  .visit-card .visit-date{
+    display:block; font-family:'IBM Plex Mono', monospace; font-size:11px; color:rgba(28,28,28,0.5); margin-top:1px;
+  }
   .visit-card .visit-score{
     font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:500;
     background:var(--matcha); border:2px solid var(--ink); border-radius:100px; padding:2px 9px;
@@ -609,25 +612,31 @@
     rankingsList.appendChild(row);
   });
 
-  // ---- Latest visits (Instagram caption quotes) ----
-  // Add entries here as: { cafeName: "must match a name in `cafes` above", quote: "short pulled quote", postUrl: "https://instagram.com/p/..." }
-  // Leaving this empty for now — populate with real captions from @neiladrinksmatcha.
-  var latestVisits = [];
+  // ---- Latest visits (real Instagram captions, most recent first) ----
+  var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  function formatVisitDate(iso){
+    var parts = iso.split('-');
+    var d = new Date(parseInt(parts[0],10), parseInt(parts[1],10)-1, parseInt(parts[2],10));
+    return monthNames[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  }
 
   var visitsGrid = document.getElementById('visits-grid');
-  if (latestVisits.length === 0) {
+  var recentVisits = cafes.slice().filter(function(c){ return c.date && c.quote; })
+    .sort(function(a, b){ return new Date(b.date) - new Date(a.date); })
+    .slice(0, 6);
+
+  if (recentVisits.length === 0) {
     visitsGrid.innerHTML = '<div class="visits-empty">Latest visit quotes are on their way — check back soon, or follow along on Instagram in the meantime.</div>';
   } else {
-    latestVisits.forEach(function(visit){
-      var match = cafes.find(function(c){ return c.name === visit.cafeName; });
+    recentVisits.forEach(function(cafe){
       var card = document.createElement('div');
       card.className = 'visit-card';
       card.innerHTML =
         '<span class="visit-quote-mark">&ldquo;</span>' +
-        '<p class="quote">' + visit.quote + '</p>' +
+        '<p class="quote">' + cafe.quote + '</p>' +
         '<div class="visit-foot">' +
-          '<span class="visit-cafe">' + visit.cafeName + '</span>' +
-          (match ? '<span class="visit-score">NDM ' + match.score.toFixed(1) + '</span>' : '') +
+          '<span><span class="visit-cafe">' + cafe.name + '</span><span class="visit-date">' + formatVisitDate(cafe.date) + '</span></span>' +
+          '<span class="visit-score">NDM ' + cafe.score.toFixed(1) + '</span>' +
         '</div>';
       visitsGrid.appendChild(card);
     });

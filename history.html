@@ -136,7 +136,7 @@
       <div class="record-table-wrap">
         <table>
           <thead>
-            <tr><th>Café</th><th>Address</th><th>NDM Score</th><th>Site</th></tr>
+            <tr><th>Café</th><th>Address</th><th>NDM Score</th><th>Visited</th><th>Site</th></tr>
           </thead>
           <tbody id="ndm-table-body"></tbody>
         </table>
@@ -171,6 +171,14 @@
 
 <script src="data/cafes.js"></script>
 <script>
+  var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  function formatVisitDate(iso){
+    if (!iso) { return "—"; }
+    var parts = iso.split('-');
+    var d = new Date(parseInt(parts[0],10), parseInt(parts[1],10)-1, parseInt(parts[2],10));
+    return monthNames[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  }
+
   var ndmBody = document.getElementById('ndm-table-body');
   var sortedNdm = NDM_CAFES.slice().sort(function(a, b){ return b.score - a.score; });
   sortedNdm.forEach(function(cafe){
@@ -179,6 +187,7 @@
       '<td>' + cafe.name + '</td>' +
       '<td>' + cafe.address + '</td>' +
       '<td class="score">' + cafe.score.toFixed(1) + '</td>' +
+      '<td>' + formatVisitDate(cafe.date) + '</td>' +
       '<td><a href="' + cafe.url + '" target="_blank" rel="noopener">Visit ↗</a></td>';
     ndmBody.appendChild(row);
   });
