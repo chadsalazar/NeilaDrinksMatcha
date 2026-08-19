@@ -180,7 +180,7 @@
   }
 
   var ndmBody = document.getElementById('ndm-table-body');
-  var sortedNdm = NDM_CAFES.slice().sort(function(a, b){ return b.score - a.score; });
+  var sortedNdm = NDM_VISITS.slice().sort(function(a, b){ return new Date(b.date) - new Date(a.date); });
   sortedNdm.forEach(function(cafe){
     var row = document.createElement('tr');
     row.innerHTML =

@@ -507,7 +507,7 @@
 <script src="data/cafes.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-  var cafes = NDM_CAFES;
+  var cafes = getLatestCafes(NDM_VISITS);
 
   var pinColors = ["#7fa64c", "#e84c3d", "#2f80c4", "#f4c53f"];
 
@@ -621,7 +621,7 @@
   }
 
   var visitsGrid = document.getElementById('visits-grid');
-  var recentVisits = cafes.slice().filter(function(c){ return c.date && c.quote; })
+  var recentVisits = NDM_VISITS.slice().filter(function(c){ return c.date && c.quote; })
     .sort(function(a, b){ return new Date(b.date) - new Date(a.date); })
     .slice(0, 6);
 

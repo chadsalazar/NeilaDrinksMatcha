@@ -1,6 +1,6 @@
-// Curated Neila Drinks Matcha café data — the single source of truth,
-// used by the homepage map/rankings/latest-visits and by history.html.
-var NDM_CAFES = [
+// Neila Drinks Matcha visit log — one entry per VISIT (matches the Google Sheet 1:1).
+// Some cafés are visited more than once — that's expected and tracked here.
+var NDM_VISITS = [
   { name: "3 Little Figs", address: "278 Highland Ave, Somerville, MA 02143", lat: 42.391795, lng: -71.111900, url: "https://www.3littlefigs.com/", score: 4.0, date: "2026-03-29",
     quote: "I got an iced oat milk matcha latte with vanilla. Something I have had many times but still hits so good.",
     review: "Good Morning Instagram! This is my first post! 3 Little Figs, Somerville, MA. I got an iced oat milk matcha latte with vanilla. Something I have had many times but still hits so good. I would rate it a 4/5 🍵🍵🍵🍵" },
@@ -60,5 +60,26 @@ var NDM_CAFES = [
     review: "Bloc Cafe Somerville, MA 📍Had to stop into Union Square for the lovely farmers market and some delicious coffee at Bloc! We know and love Diesel so had to come out to support their cousin! I got an iced strawberry matcha latte with oat milk. This was delicious I would give it a 4.3/5 and the color a 4/5 (color doesn't matter as much if the flavor is bumping). Happy love island USA finale day and happy birthday to all my cancer loved ones!! Vamos Argentina 🇦🇷!" },
   { name: "Dock Square Coffee House", address: "18 Dock Square, Kennebunkport, ME 04046", lat: 43.361405, lng: -70.477303, url: "https://www.dschkpt.com/", score: 4.5, date: "2026-07-12",
     quote: "We took a little jaunt this Sunday am to get an iced wild blueberry matcha latte with oat milk. This was bussing.",
-    review: "Dock Square Coffee House Kennebunkport, ME 📍 So excited to feature my favorite little town in Maine for one of my 🦀 @kendall.eaton birthday! We took a little jaunt this Sunday am to get an iced wild blueberry matcha latte with oat milk. This was bussing. I would rate the taste a 4.5/5 and color a 3.9/5. Enjoy your Sunday everyone 😎" }
+    review: "Dock Square Coffee House Kennebunkport, ME 📍 So excited to feature my favorite little town in Maine for one of my 🦀 @kendall.eaton birthday! We took a little jaunt this Sunday am to get an iced wild blueberry matcha latte with oat milk. This was bussing. I would rate the taste a 4.5/5 and color a 3.9/5. Enjoy your Sunday everyone 😎" },
+  { name: "True Grounds", address: "717 Broadway Ball Square, Somerville, MA 02144", lat: 42.400134, lng: -71.112497, url: "https://www.truegrounds.com/", score: 4.6, date: "2026-07-19",
+    quote: "I got a large iced matcha latte with oat milk and the bees knees syrup (honey, cinnamon, etc.). This is one of my faves 🤤",
+    review: "7/18 True Grounds Somerville, MA 📍Hello! Yesterday we took a stroll to Ball square and I got a large iced matcha latte with oat milk and the bees knees syrup (honey, cinnamon, etc.). This is one of my faves 🤤 I would rate this a 4.6/5 and the color a 4/5. It truly was gone too soon. See you all soon 👋" },
+  { name: "Hearth & Hug Bakery", address: "349 Highland Ave, Somerville, MA 02144", lat: 42.394288, lng: -71.116838, url: "https://www.hearthandhugbakery.com/", score: 4.0, date: "2026-08-02",
+    quote: "I spotted a little white fluff in the window and had to pull over ASAP to say hello to a fellow Westie!",
+    review: "8/2 Hearth and Hug Bakery Somerville, MA 📍Guys, I was minding my business driving to Trader Joe's and I spotted a little white fluff in the window of Hearth and Hug and had to pull over ASAP to say hello to a fellow Westie! W for dog friendly establishments. But while I was saying hi and receiving licks from adorable Ava the 6 year old, but seemingly mini, Westie!!!! I then got a cheeky little vanilla iced matcha latte! This was delish I would give it a 4/5, it had a slight chocolate milky taste which I can get behind, and the color was gorge I'd rate it a 4.2/5. Happy Sunday and I hope to see this little Westie around Somerville in the future!!" },
+  { name: "Magic Brain Cafe", address: "31 Perry St, Cape May, NJ 08204", lat: 38.931460, lng: -74.923802, url: "https://www.magicbraincapemay.com/", score: 3.9, date: "2026-08-16",
+    quote: "On our wonderful weekend getaway to New Jersey we stopped into this cute little cafe to get an iced matcha latte with baba syrup and oat milk.",
+    review: "8/16 Magic Brain Cafe Cape May, NJ 📍On our wonderful weekend getaway to New Jersey we stopped into this cute little cafe to get an iced matcha latte with baba syrup and oat milk. This was sweet going down and gone in a minute, I would rank the taste a 3.9/5 and the color a 3.3/5. Have a great week ☀️ ✌️💚" }
 ];
+
+// Derives one entry per unique café (by name), using its most recent visit —
+// this is what powers the map pins and the rankings leaderboard.
+function getLatestCafes(visits){
+  var latest = {};
+  visits.forEach(function(v){
+    if (!latest[v.name] || new Date(v.date) > new Date(latest[v.name].date)) {
+      latest[v.name] = v;
+    }
+  });
+  return Object.keys(latest).map(function(k){ return latest[k]; });
+}
